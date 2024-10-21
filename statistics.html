@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View your player statistics for Blackjack.">
+    <title>Statistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-dark text-white"> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav d-flex justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html" aria-label="Go to Blackjack page">Blackjack</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="statistics.html" aria-label="Go to Statistics page">Statistics</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 text-center">
+        <h1>Player Statistics</h1>
+        <canvas id="statsChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Retrieve stats from local storage
+        const my_wins = parseInt(localStorage.getItem('wins')) || 0;
+        const my_losses = parseInt(localStorage.getItem('losses')) || 0;
+
+        console.log("Wins: ", my_wins);
+        console.log("Losses: ", my_losses);
+
+        const ctx = document.getElementById('statsChart').getContext('2d');
+        const statsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Wins', 'Losses'], 
+                datasets: [{
+                    label: 'Player statics',
+                    data: [my_wins, my_losses], 
+                    backgroundColor: ['#4CAF50', '#F44336'], 
+                    borderColor: ['#4CAF50', '#F44336'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top', 
+                        labels: {
+                            color: 'white' 
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Win/Loss Statistics',
+                        color: 'white' 
+                    }
+                }
+            },
+            // Set global default color for all text elements
+            defaultFontColor: 'white',
+        });
+    </script>
+    
+    <script src="cardscript.js"></script>
+</body>
+</html>
